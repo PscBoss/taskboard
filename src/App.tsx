@@ -61,7 +61,6 @@ const App: React.FC = () => {
           minHeight: "100vh",
         }}
       >
-        {isLoggedIn ? <></> : <HomeContents />}
         <HomeContents />
       </Stack>
     </ThemeProvider>

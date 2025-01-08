@@ -3,34 +3,45 @@ import { Box, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import BoardModal from '../common/BoardModal';
 
-// const boardss = [
-//     {
-//         id: 1,
-//         title: 'Get Hyped',
-//         desc: "You can click on these boards to open them, and manage tasks inside.",
-//         tasks: [
-//             { detail: 'Task 1', status: 'To Do' },
-//             { detail: 'Task 2', status: 'To Do' },
-//             { detail: 'Task 3', status: 'In Progress' },
-//             { detail: 'Task 4', status: 'In Progress' },
-//             { detail: 'Task 5', status: 'Done' },
-//             { detail: 'Task 6', status: 'Done' },
-//         ],
-//     },
-//     {
-//         id: 2,
-//         title: 'Sign Up With TaskBoard',
-//         desc: "Your task now is to sign up for an account on TaskBoard.",
-//         tasks: [
-//             { detail: 'Task 1', status: 'To Do' },
-//             { detail: 'Task 2', status: 'To Do' },
-//             { detail: 'Task 3', status: 'In Progress' },
-//             { detail: 'Task 4', status: 'In Progress' },
-//             { detail: 'Task 5', status: 'Done' },
-//             { detail: 'Task 6', status: 'Done' },
-//         ],
-//     },
-// ]
+//Data that will be fetched
+const demoBoards = [
+    {
+        id: 1,
+        title: 'Get Hyped',
+        desc: "You can click on these boards to open them, and manage tasks inside.",
+        columns: [
+            { id: 'to_do', title: 'To Do' },
+            { id: 'in_progress', title: 'In Progress', },
+            { id: 'done', title: 'Done' }
+        ],
+        tasks: [
+            { id: 1, title: 'task 1', details: 'Task 1', status: 'to_do' },
+            { id: 2, title: 'task 2', details: 'Task 2', status: 'to_do' },
+            { id: 3, title: 'task 3', details: 'Task 3', status: 'in_progress' },
+            { id: 4, title: 'task 4', details: 'Task 4', status: 'in_progress' },
+            { id: 5, title: 'task 5', details: 'Task 5', status: 'done' },
+            { id: 6, title: 'task 6', details: 'Task 6', status: 'done' },
+        ],
+    },
+    {
+        id: 2,
+        title: 'Sign Up With TaskBoard',
+        desc: "Your task now is to sign up for an account on TaskBoard.",
+        columns: [
+            { id: 'to_do', title: 'To Do' },
+            { id: 'in_progress', title: 'In Progress', },
+            { id: 'done', title: 'Done' }
+        ],
+        tasks: [
+            { id: 1, title: 'task 1', details: 'Task 1', status: 'to_do' },
+            { id: 2, title: 'task 1', details: 'Task 2', status: 'to_do' },
+            { id: 3, title: 'task 1', details: 'Task 3', status: 'in_progress' },
+            { id: 4, title: 'task 1', details: 'Task 4', status: 'in_progress' },
+            { id: 5, title: 'task 1', details: 'Task 5', status: 'done' },
+            { id: 6, title: 'task 1', details: 'Task 6', status: 'done' },
+        ],
+    }
+]
 
 const sectionStyle = {
     minWidth: '100vw',
@@ -67,34 +78,7 @@ const modalStyle = {
 };
 
 function DemoDashboard() {
-    const [boards, setBoards] = useState([
-        {
-            id: 1,
-            title: 'Get Hyped',
-            desc: "You can click on these boards to open them, and manage tasks inside.",
-            tasks: [
-                { detail: 'Task 1', status: 'To Do' },
-                { detail: 'Task 2', status: 'To Do' },
-                { detail: 'Task 3', status: 'In Progress' },
-                { detail: 'Task 4', status: 'In Progress' },
-                { detail: 'Task 5', status: 'Done' },
-                { detail: 'Task 6', status: 'Done' },
-            ],
-        },
-        {
-            id: 2,
-            title: 'Sign Up With TaskBoard',
-            desc: "Your task now is to sign up for an account on TaskBoard.",
-            tasks: [
-                { detail: 'Task 1', status: 'To Do' },
-                { detail: 'Task 2', status: 'To Do' },
-                { detail: 'Task 3', status: 'In Progress' },
-                { detail: 'Task 4', status: 'In Progress' },
-                { detail: 'Task 5', status: 'Done' },
-                { detail: 'Task 6', status: 'Done' },
-            ],
-        },
-    ])
+    const [boards] = useState(demoBoards)
     return (
         <Box sx={{
             background: "linear-gradient(to right,rgb(228, 204, 232),rgb(255, 229, 229), #ffebee)",
@@ -141,10 +125,8 @@ function BoardComponents({ board }: any) {
             </Paper>
             <BoardModal open={open}
                 onClose={handleClose}
-                title={board.title}
-                desc={board.desc}
                 modalStyle={modalStyle}
-                tasks={board.tasks}
+                board={board}
             />
         </>
     )

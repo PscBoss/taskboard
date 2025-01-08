@@ -1,29 +1,36 @@
-import { Box, Modal, Paper, SxProps } from "@mui/material";
+import { Box, Modal, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import ReorderIcon from '@mui/icons-material/Reorder';
+import TaskColumn from "./TaskColumn";
+import { useState } from "react";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { Board, Task } from "../../../types/interfaces";
 
 type BoardModalProps = {
-    title?: string
-    desc?: string
-    tasks?: { detail: string, status: string }[]
     open: boolean
     onClose: () => void
     modalStyle?: SxProps
+    board: Board
 };
 
-const taskColumnStyle = {
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginX: 1,
-};
+function BoardModal({ board, open, onClose, modalStyle = {} }: BoardModalProps) {
+    const [tasks, setTasks] = useState<Task[]>(board.tasks);
 
-function BoardModal({ title, desc, open, onClose, modalStyle, tasks = [] }: BoardModalProps) {
-    const todoTasks = tasks.filter((task) => task.status === 'To Do');
-    const inProgressTasks = tasks.filter((task) => task.status === 'In Progress');
-    const doneTasks = tasks.filter((task) => task.status === 'Done');
+    function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event;
+
+        if (!over) return;
+
+        const taskID = active.id as string;
+        const newStatus = over.id as Task['status'];
+
+        setTasks(tasks.map(task => task.id === taskID
+            ? {
+                ...task,
+                status: newStatus,
+            }
+            : task));
+    }
+
     return (
         <Modal open={open}
             onClose={onClose}
@@ -37,86 +44,20 @@ function BoardModal({ title, desc, open, onClose, modalStyle, tasks = [] }: Boar
                         marginBottom: 1,
                         fontWeight: 'bold',
                     }}>
-                    {title}
+                    {board.title}
                 </Typography>
-                <Typography variant='body1' sx={{ marginY: 1, textAlign: 'center' }}>{desc}</Typography>
+                <Typography variant='body1' sx={{ marginY: 1, textAlign: 'center' }}>{board.desc}</Typography>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                 }}>
-                    <Box sx={taskColumnStyle}>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                                textAlign: 'center',
-                                marginY: 1,
-                            }}
-                        >
-                            <Typography fontWeight={'bold'}>To Do</Typography>
-
-                        </Paper>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                            }}
-                        >
-                            {todoTasks.map((task) => (
-                                <Box sx={{ display: 'flex' }}><ReorderIcon /><Typography component="span">{task.detail}</Typography></Box>
-                            ))}
-                        </Paper>
-                    </Box>
-                    <Box sx={taskColumnStyle}>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                                textAlign: 'center',
-                                marginY: 1,
-                            }}
-                        >
-                            <Typography fontWeight={'bold'}>In Progress</Typography>
-                        </Paper>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                            }}
-                        >
-                            {inProgressTasks.map((task) => (
-                                <Box sx={{ display: 'flex' }}>
-                                    <ReorderIcon />
-                                    <Typography component="span">
-                                        {task.detail}
-                                    </Typography>
-                                </Box>
-                            ))}
-                        </Paper>
-                    </Box>
-                    <Box sx={taskColumnStyle}>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                                textAlign: 'center',
-                                marginY: 1,
-                            }}
-                        >
-                            <Typography fontWeight={'bold'}>Done</Typography>
-                        </Paper>
-                        <Paper elevation={3}
-                            sx={{
-                                width: '100%',
-                            }}
-                        >
-                            {doneTasks.map((task) => (
-                                <Box sx={{ display: 'flex' }}>
-                                    <ReorderIcon />
-                                    <Typography component="span">
-                                        {task.detail}
-                                    </Typography>
-                                </Box>
-                            ))}
-                        </Paper>
-                    </Box>
+                    <DndContext onDragEnd={handleDragEnd}>
+                        {board.columns.map((column) => (
+                            <TaskColumn column={column} tasks={tasks.filter(task => task.status === column.id)} />
+                        ))};
+                    </DndContext>
                 </Box>
             </Box >
         </Modal >
