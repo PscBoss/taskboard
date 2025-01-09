@@ -1,40 +1,54 @@
-import { Box, Modal, SxProps } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TaskColumn from "./TaskColumn";
 import { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { Board, Task } from "../../../types/interfaces";
+import { Board, Column, Task } from "../../../types/interfaces";
 
 type BoardModalProps = {
     open: boolean
     onClose: () => void
-    modalStyle?: SxProps
     board: Board
 };
 
-function BoardModal({ board, open, onClose, modalStyle = {} }: BoardModalProps) {
-    const [tasks, setTasks] = useState<Task[]>(board.tasks);
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 1000,
+    height: 500,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
+function BoardModal({ board, open, onClose }: BoardModalProps) {
+    const [tasks, setTasks] = useState<Task[]>(board.tasks); // state for task management in the board
 
     function handleDragEnd(event: DragEndEvent) {
-        const { active, over } = event;
+        const { active, over } = event; // active is the task being dragged, over is the task being dragged over
 
-        if (!over) return;
+        if (!over) return;  // if there is no task being dragged over, return
 
-        const taskID = active.id as string;
-        const newStatus = over.id as Task['status'];
+        const taskID = active.id as Column['id']; // active.id = column.id of the task being dragged
+        const newStatus = over.id as Task['status']; // over.id = column.id of the task being dragged over, to be updated as new task.status
 
+        // setTask is used to update tasks status by using array.map to create new updated task array. 
         setTasks(tasks.map(task => task.id === taskID
             ? {
                 ...task,
                 status: newStatus,
-            }
-            : task));
+            } // to update the dragged task status on drag end
+            : task)); // to keep other tasks the same
     }
 
     return (
         <Modal open={open}
             onClose={onClose}
             aria-labelledby="modal-title"
+
         >
             <Box sx={modalStyle}>
                 <Typography variant='h6' id='modal-title'
@@ -54,8 +68,9 @@ function BoardModal({ board, open, onClose, modalStyle = {} }: BoardModalProps) 
                     justifyContent: 'space-between',
                 }}>
                     <DndContext onDragEnd={handleDragEnd}>
+                        {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
-                            <TaskColumn column={column} tasks={tasks.filter(task => task.status === column.id)} />
+                            <TaskColumn key={column.id} column={column} tasks={tasks.filter(task => task.status === column.id)} />
                         ))};
                     </DndContext>
                 </Box>

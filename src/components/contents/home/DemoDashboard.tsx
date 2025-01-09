@@ -2,6 +2,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Box, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import BoardModal from '../common/BoardModal';
+import { TaskEditProvider } from '../common/task-cards/TaskEditContext';
 
 //Data that will be fetched
 const demoBoards = [
@@ -44,7 +45,7 @@ const demoBoards = [
 ]
 
 const sectionStyle = {
-    minWidth: '100vw',
+    width: '100vw',
     display: 'flex',
     flexDirection: 'row',
     overflowX: 'auto',
@@ -64,24 +65,12 @@ const boardStyle = {
     margin: 2
 }
 
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 1000,
-    height: 500,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
 function DemoDashboard() {
     const [boards] = useState(demoBoards)
     return (
         <Box sx={{
             background: "linear-gradient(to right,rgb(228, 204, 232),rgb(255, 229, 229), #ffebee)",
+            flexGrow: 1,
         }}>
             <Typography variant='h4'
                 sx={{
@@ -123,11 +112,12 @@ function BoardComponents({ board }: any) {
                 </Typography>
                 <Typography variant='body1'>{board.desc}</Typography>
             </Paper>
-            <BoardModal open={open}
-                onClose={handleClose}
-                modalStyle={modalStyle}
-                board={board}
-            />
+            <TaskEditProvider>
+                <BoardModal open={open}
+                    onClose={handleClose}
+                    board={board}
+                />
+            </TaskEditProvider>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useDroppable } from "@dnd-kit/core";
 import { Column, Task } from "../../../types/interfaces";
-import TaskCard from "./TaskCard";
+import TaskCard from "./task-cards/TaskCard";
 
 type TaskColumnsProps = {
     column: Column

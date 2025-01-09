@@ -52,17 +52,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MainAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
-      <Stack
-        direction="row"
-        spacing={0}
-        sx={{
-          justifyContent: "flex-start",
-          alignItems: "stretch",
-          minHeight: "100vh",
-        }}
-      >
-        <HomeContents />
-      </Stack>
+      <HomeContents />
     </ThemeProvider>
   )
 };

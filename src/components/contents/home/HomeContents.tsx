@@ -1,21 +1,28 @@
 import { styled } from '@mui/material/styles';
 import HomeSlideShow from './HomeSlideShow';
 import DemoDashboard from './DemoDashboard';
-import Box from '@mui/material/Box';
+import { Stack } from '@mui/material';
 
 const Content = styled('div')(({ theme }) => ({
     marginTop: theme.mixins.toolbar.minHeight,
 }));
 
-function MainContents() {
+function HomeContents() {
     return (
         <Content>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Stack
+                spacing={0}
+                sx={{
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    height: "100vh",
+                }}
+            >
                 <HomeSlideShow />
                 <DemoDashboard />
-            </Box>
+            </Stack>
         </Content >
     )
 }
 
-export default MainContents
+export default HomeContents
