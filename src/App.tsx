@@ -1,4 +1,4 @@
-import { createTheme, CssBaseline, Stack, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useState } from 'react';
 import MainAppBar from './components/app-bar/MainAppBar';
 import HomeContents from './components/contents/home/HomeContents';

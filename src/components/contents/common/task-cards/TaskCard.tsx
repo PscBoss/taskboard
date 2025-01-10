@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Task } from '../../../../types/interfaces';
 import { useDraggable } from '@dnd-kit/core';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import TaskShow from './TaskShow';
 import TaskEdit from './TaskEdit';
 import { useTaskEdit } from './TaskEditContext';

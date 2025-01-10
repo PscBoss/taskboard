@@ -4,7 +4,7 @@ import { useState } from 'react';
 import BoardModal from '../common/BoardModal';
 import { TaskEditProvider } from '../common/task-cards/TaskEditContext';
 
-//Data that will be fetched
+//Data that will be fetched when the user logs in to the real dashboard
 const demoBoards = [
     {
         id: 1,

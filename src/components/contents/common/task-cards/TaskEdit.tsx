@@ -47,6 +47,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                     value={title}
                     label="Task Title"
                     variant="outlined"
+                    fullWidth
                     onChange={(e) => setTitle(e.target.value)}
                     slotProps={{
                         input: {
@@ -61,6 +62,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                     value={details}
                     label="Task Details"
                     variant="outlined"
+                    fullWidth
                     onChange={(e) => setDetails(e.target.value)}
                     multiline />
             </Box>
