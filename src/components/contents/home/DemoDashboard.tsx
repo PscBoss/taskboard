@@ -34,12 +34,12 @@ const demoBoards = [
             { id: 'done', title: 'Done' }
         ],
         tasks: [
-            { id: 1, title: 'task 1', details: 'Task 1', status: 'to_do' },
-            { id: 2, title: 'task 1', details: 'Task 2', status: 'to_do' },
-            { id: 3, title: 'task 1', details: 'Task 3', status: 'in_progress' },
-            { id: 4, title: 'task 1', details: 'Task 4', status: 'in_progress' },
-            { id: 5, title: 'task 1', details: 'Task 5', status: 'done' },
-            { id: 6, title: 'task 1', details: 'Task 6', status: 'done' },
+            { id: 7, title: 'task 1', details: 'Task 1', status: 'to_do' },
+            { id: 8, title: 'task 2', details: 'Task 2', status: 'to_do' },
+            { id: 9, title: 'task 3', details: 'Task 3', status: 'in_progress' },
+            { id: 10, title: 'task 4', details: 'Task 4', status: 'in_progress' },
+            { id: 11, title: 'task 5', details: 'Task 5', status: 'done' },
+            { id: 12, title: 'task 6', details: 'Task 6', status: 'done' },
         ],
     }
 ]
