@@ -11,9 +11,10 @@ import { useTaskEdit } from './TaskEditContext';
 type TaskCardProps = {
     task: Task
     isOverStyle?: SxProps
+    onStopTaskEdit: (task: Task) => void
 }
 
-function TaskCard({ task, isOverStyle }: TaskCardProps) {
+function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
     });
@@ -30,7 +31,6 @@ function TaskCard({ task, isOverStyle }: TaskCardProps) {
     const isEditing = (editingTaskId === task.id)
 
     const handleTaskClick = () => {
-        console.log('clicked on the task!');
         setEditingTaskId(task.id);
     }
 
@@ -48,10 +48,6 @@ function TaskCard({ task, isOverStyle }: TaskCardProps) {
         }
     };
 
-    const handleStopTaskEdit = () => {
-        setEditingTaskId(null);
-    }
-
     return (
         <Card
             {...(isEditing ? {} : { ref: setNodeRef })}
@@ -63,7 +59,7 @@ function TaskCard({ task, isOverStyle }: TaskCardProps) {
         >
             <CardContent>
                 {(isEditing)
-                    ? <TaskEdit task={task} onStopTaskEdit={handleStopTaskEdit} />
+                    ? <TaskEdit task={task} onStopTaskEdit={onStopTaskEdit} />
                     : <TaskShow task={task} />}
             </CardContent>
         </Card>

@@ -7,7 +7,7 @@ import { useTaskEdit } from './TaskEditContext';
 
 type TaskEditProps = {
     task: Task
-    onStopTaskEdit: (title?: string, details?: string) => any
+    onStopTaskEdit: (task: Task) => any
 }
 
 function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
@@ -16,15 +16,13 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
     const { setEditingTaskId } = useTaskEdit();
 
     // States for recording the changes to the task (track changes in the input fields)
-    const [title, setTitle] = useState(task.title);
-    const [details, setDetails] = useState(task.details);
+    const [editingTask, setEditingTask] = useState<Task>(task);
 
     // Effect to detect clicks outside the element
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
-                console.log("Clicked outside the element!");
-                onStopTaskEdit(title, details);
+                onStopTaskEdit(editingTask);
                 setEditingTaskId(null);
             }
         };
@@ -36,7 +34,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
             // Cleanup the event listener
             document.removeEventListener("click", handleClickOutside);
         };
-    }, []);
+    }, [editingTask]);
 
     return (
         <FormControl>
@@ -44,11 +42,13 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                 display='flex'
                 flexDirection='column'>
                 <TextField id="title"
-                    value={title}
+                    value={editingTask.title}
                     label="Task Title"
                     variant="outlined"
                     fullWidth
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                        setEditingTask((prevTask) => ({ ...prevTask, title: e.target.value }))
+                    }}
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -59,11 +59,11 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                         },
                     }} />
                 <TextField id="details"
-                    value={details}
+                    value={editingTask.details}
                     label="Task Details"
                     variant="outlined"
                     fullWidth
-                    onChange={(e) => setDetails(e.target.value)}
+                    onChange={(e) => setEditingTask((prevTask) => ({ ...prevTask, details: e.target.value }))}
                     multiline />
             </Box>
         </FormControl>

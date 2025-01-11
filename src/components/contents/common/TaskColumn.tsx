@@ -5,7 +5,8 @@ import TaskCard from "./task-cards/TaskCard";
 
 type TaskColumnsProps = {
     column: Column
-    tasks: Task[]
+    tasksInColumn: Task[]
+    onStopTaskEdit: (task: Task) => void
 };
 
 const taskColumnStyle = {
@@ -17,7 +18,7 @@ const taskColumnStyle = {
     marginX: 1,
 };
 
-function TaskColumn({ column, tasks }: TaskColumnsProps) {
+function TaskColumn({ column, tasksInColumn, onStopTaskEdit }: TaskColumnsProps) {
 
     const { isOver, setNodeRef } = useDroppable({
         id: column.id,
@@ -43,8 +44,8 @@ function TaskColumn({ column, tasks }: TaskColumnsProps) {
                 }}
                 ref={setNodeRef}
             >
-                {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} isOverStyle={isOverStyle} />
+                {tasksInColumn.map((task) => (
+                    <TaskCard key={task.id} task={task} isOverStyle={isOverStyle} onStopTaskEdit={onStopTaskEdit} />
                 ))}
             </Paper>
         </Box>

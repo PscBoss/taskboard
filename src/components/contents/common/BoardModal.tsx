@@ -44,11 +44,29 @@ function BoardModal({ board, open, onClose }: BoardModalProps) {
             : task)); // to keep other tasks the same
     }
 
+    const handleTaskUpdate = (prevTasks: Task[], id: Task["id"], updatedValue: Task) => {
+        // Use map method to return a new array
+        return prevTasks.map(task => {
+            // If this task's id matches the one to be updated
+            if (task.id === id) {
+                // Use spread operator to merge new properties
+                return { ...task, ...updatedValue };
+            }
+            // If not, return the object unchanged
+            return task;
+        });
+    }
+
+    const handleStopTaskEdit = (task: Task) => {
+        // to update the tasks in the board
+        const updatedTasks = handleTaskUpdate(tasks, task.id, task)
+        setTasks(() => updatedTasks)
+    }
+
     return (
         <Modal open={open}
             onClose={onClose}
             aria-labelledby="modal-title"
-
         >
             <Box sx={modalStyle}>
                 <Typography variant='h6' id='modal-title'
@@ -70,7 +88,7 @@ function BoardModal({ board, open, onClose }: BoardModalProps) {
                     <DndContext onDragEnd={handleDragEnd}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
-                            <TaskColumn key={column.id} column={column} tasks={tasks.filter(task => task.status === column.id)} />
+                            <TaskColumn key={column.id} column={column} tasksInColumn={tasks.filter(task => task.status === column.id)} onStopTaskEdit={handleStopTaskEdit} />
                         ))};
                     </DndContext>
                 </Box>
