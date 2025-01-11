@@ -15,7 +15,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
     const elementRef = useRef<HTMLDivElement>(null);
     const { setEditingTaskId } = useTaskEdit();
 
-    // States for recording the changes to the task (track changes in the input fields)
+    // State for recording the changes to the task (track changes in the input fields)
     const [editingTask, setEditingTask] = useState<Task>(task);
 
     // Effect to detect clicks outside the element

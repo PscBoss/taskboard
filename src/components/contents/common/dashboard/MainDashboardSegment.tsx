@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { Board } from '../../../../types/interfaces'
+import { Board, Task } from '../../../../types/interfaces'
 import BoardComponents from './BoardComponent'
 import CreateBoard from './CreateBoard'
 import { useState } from 'react'
@@ -33,13 +33,37 @@ function DashboardSegment({ boardsData }: DashboardSegmentProps) {
         setBoards((boards) => boards.filter((board) => board.id !== boardId))
     }
 
-    const [boards, setBoards] = useState(boardsData)
+    const [boards, setBoards] = useState(boardsData) //state for managing boards on the dashboard.
+
+    const handleBoardUpdate = (
+        prevBoards: Board[],
+        updatedBoard: {
+            id: number;
+            title: string;
+            desc: string;
+        }) => {
+        // Use map method to return a new array
+        return prevBoards.map(board => {
+            // If this board's id matches the one to be updated
+            if (board.id === updatedBoard.id) {
+                // Use spread operator to merge new properties
+                return { ...board, ...updatedBoard };
+            }
+            // If not, return the object unchanged
+            return board;
+        });
+    }
+
+    const handleStopBoardEdit = (editingBoard: { id: number; title: string; desc: string; }) => {
+        const updatedBoards = handleBoardUpdate(boards, editingBoard)
+        setBoards(() => updatedBoards)
+    } // to update the boards in the board
 
     return (
         <>
             <Box sx={sectionStyle}>
                 {boards.map((board) => (
-                    <BoardComponents key={board.id} board={board} onDelete={handleDelete} sx={boardStyle} />
+                    <BoardComponents key={board.id} board={board} onStopBoardEdit={handleStopBoardEdit} onDelete={handleDelete} sx={boardStyle} />
                 ))}
                 <CreateBoard setBoards={setBoards} sx={boardStyle} />
             </Box >

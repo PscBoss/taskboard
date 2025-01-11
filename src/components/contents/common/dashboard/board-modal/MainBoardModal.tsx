@@ -1,11 +1,13 @@
 import { Box, Button, Modal, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import TaskColumn from "../TaskColumn";
+import TaskColumn from "../../TaskColumn";
 import { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { Board, Column, Task } from "../../../../types/interfaces";
+import { Board, Column, Task } from "../../../../../types/interfaces";
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import React from "react";
+import BoardInfoShow from "./BoardInfoShow";
+import BoardInfoEdit from "./BoardInfoEdit";
 
 const modalStyle = {
     position: 'absolute',
@@ -85,10 +87,16 @@ interface BoardModalProps {
     onClose: () => void
     board: Board
     onDelete: (boardId: Board['id']) => void
+    onStopBoardEdit: (editingBoard: {
+        id: Board['id']
+        title: Board['title'];
+        desc: Board['desc'];
+    }) => void
 };
 
-function BoardModal({ board, open, onClose, onDelete }: BoardModalProps) {
-    const [tasks, setTasks] = useState<Task[]>(board.tasks); // state for task management in the board
+function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit }: BoardModalProps) {
+    const [tasks, setTasks] = useState(board.tasks) // state of task management in the board
+    const [isEditingBoard, setIsEditingBoard] = useState(false)
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event; // active is the task being dragged, over is the task being dragged over
@@ -107,13 +115,13 @@ function BoardModal({ board, open, onClose, onDelete }: BoardModalProps) {
             : task)); // to keep other tasks the same
     }
 
-    const handleTaskUpdate = (prevTasks: Task[], id: Task["id"], updatedValue: Task) => {
+    const handleTaskUpdate = (prevTasks: Task[], updatedTask: Task) => {
         // Use map method to return a new array
         return prevTasks.map(task => {
             // If this task's id matches the one to be updated
-            if (task.id === id) {
+            if (task.id === updatedTask.id) {
                 // Use spread operator to merge new properties
-                return { ...task, ...updatedValue };
+                return { ...task, ...updatedTask };
             }
             // If not, return the object unchanged
             return task;
@@ -121,10 +129,10 @@ function BoardModal({ board, open, onClose, onDelete }: BoardModalProps) {
     }
 
     const handleStopTaskEdit = (task: Task) => {
-        // to update the tasks in the board
-        const updatedTasks = handleTaskUpdate(tasks, task.id, task)
+        const updatedTasks = handleTaskUpdate(tasks, task)
         setTasks(() => updatedTasks)
-    }
+    } // to update the tasks in the board
+
     return (
         <Modal open={open}
             onClose={onClose}
@@ -132,16 +140,20 @@ function BoardModal({ board, open, onClose, onDelete }: BoardModalProps) {
             aria-describedby={board.desc}
         >
             <Box sx={{ ...modalStyle, overflowY: 'auto' }}>
-                <Typography variant='h6' id='modal-title'
-                    sx={{
-                        width: '100%',
-                        textAlign: 'center',
-                        marginBottom: 1,
-                        fontWeight: 'bold',
-                    }}>
-                    {board.title}
-                </Typography>
-                <Typography variant='body1' sx={{ marginY: 1, textAlign: 'center' }}>{board.desc}</Typography>
+                {
+                    isEditingBoard
+                        ? <BoardInfoEdit
+                            boardId={board.id}
+                            boardTitle={board.title}
+                            boardDesc={board.desc}
+                            isEditingBoard={isEditingBoard}
+                            setIsEditingBoard={setIsEditingBoard}
+                            onStopBoardEdit={onStopBoardEdit} />
+                        : <BoardInfoShow
+                            onClick={() => setIsEditingBoard(true)}
+                            boardTitle={board.title}
+                            boardDesc={board.desc} />
+                }
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'row',
