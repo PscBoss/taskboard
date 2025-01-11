@@ -10,10 +10,10 @@ import { useTaskEdit } from './TaskEditContext';
 
 type TaskCardProps = {
     task: Task
-    sx?: SxProps
+    isOverStyle?: SxProps
 }
 
-function TaskCard({ task, sx }: TaskCardProps) {
+function TaskCard({ task, isOverStyle }: TaskCardProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
     });
@@ -54,13 +54,12 @@ function TaskCard({ task, sx }: TaskCardProps) {
 
     return (
         <Card
-            ref={isEditing ? null : setNodeRef}
+            {...(isEditing ? {} : { ref: setNodeRef })}
             {...(isEditing ? {} : listeners)}
             {...(isEditing ? {} : attributes)}
-            sx={{ ...style, margin: 1, backgroundColor: 'lightgrey', ...sx }}
+            sx={{ ...style, margin: 1, backgroundColor: 'lightgrey', ...isOverStyle, height: '90px' }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            id={task.id}
         >
             <CardContent>
                 {(isEditing)

@@ -44,7 +44,7 @@ function TaskColumn({ column, tasks }: TaskColumnsProps) {
                 ref={setNodeRef}
             >
                 {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} sx={isOverStyle} />
+                    <TaskCard key={task.id} task={task} isOverStyle={isOverStyle} />
                 ))}
             </Paper>
         </Box>

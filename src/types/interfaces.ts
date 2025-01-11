@@ -1,5 +1,5 @@
 export interface Task {
-    id: string
+    id: number
     title: string
     details: string
     status: string
@@ -11,7 +11,7 @@ export interface Column {
 }
 
 export interface Board {
-    id: string
+    id: number
     title: string
     desc: string
     columns: Column[]

@@ -32,8 +32,8 @@ function BoardModal({ board, open, onClose }: BoardModalProps) {
 
         if (!over) return;  // if there is no task being dragged over, return
 
-        const taskID = active.id as Column['id']; // active.id = column.id of the task being dragged
-        const newStatus = over.id as Task['status']; // over.id = column.id of the task being dragged over, to be updated as new task.status
+        const taskID = active.id as Task['id']; // active.id = column.id of the task being dragged
+        const newStatus = over.id as Column['id']; // over.id = column.id of the task being dragged over, to be updated as new task.status
 
         // setTask is used to update tasks status by using array.map to create new updated task array. 
         setTasks(tasks.map(task => task.id === taskID

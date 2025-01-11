@@ -225,7 +225,7 @@ export default function MainAppBar({ isLoggedIn, setLoggedIn }: MainAppBarProps)
                     </Box>
                     <LoggedInToggle setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton
+                        {/* <IconButton
                             size="large"
                             aria-label="show 17 new notifications"
                             color="inherit"
@@ -233,7 +233,7 @@ export default function MainAppBar({ isLoggedIn, setLoggedIn }: MainAppBarProps)
                             <Badge badgeContent={17} color="error">
                                 <NotificationsIcon />
                             </Badge>
-                        </IconButton>
+                        </IconButton> */}
                         <IconButton
                             size="large"
                             edge="end"

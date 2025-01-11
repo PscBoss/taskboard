@@ -1,8 +1,4 @@
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Box, Paper, Typography } from '@mui/material';
-import { useState } from 'react';
-import BoardModal from '../common/BoardModal';
-import { TaskEditProvider } from '../common/task-cards/TaskEditContext';
+import Dashboard from '../common/dashboard/Dashboard';
 
 //Data that will be fetched when the user logs in to the real dashboard
 const demoBoards = [
@@ -44,100 +40,9 @@ const demoBoards = [
     }
 ]
 
-const sectionStyle = {
-    width: '100vw',
-    display: 'flex',
-    flexDirection: 'row',
-    overflowX: 'auto',
-    flexWrap: 'nowrap',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-}
-
-const boardStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '200px',
-    height: '200px',
-    justifyContent: 'flex-start',
-    padding: 2,
-    margin: 2
-}
-
 function DemoDashboard() {
-    const [boards] = useState(demoBoards)
     return (
-        <Box sx={{
-            background: "linear-gradient(to right,rgb(228, 204, 232),rgb(255, 229, 229), #ffebee)",
-            flexGrow: 1,
-        }}>
-            <Typography variant='h4'
-                sx={{
-                    width: '100%',
-                    paddingTop: 4,
-                    paddingLeft: 4,
-                    textAlign: 'start',
-                }}>
-                My Boards
-            </Typography>
-            <Box sx={sectionStyle}>
-                {boards.map((board) => (
-                    <BoardComponents key={board.id} board={board} />
-                ))}
-                <CreateBoard />
-            </Box>
-        </Box>
-    )
-}
-
-function BoardComponents({ board }: any) {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    return (
-        <>
-            <Paper elevation={3}
-                sx={boardStyle}
-                onClick={handleOpen}
-            >
-                <Typography variant='h6'
-                    sx={{
-                        width: '100%',
-                        textAlign: 'center',
-                        marginBottom: 1,
-                        fontWeight: 'bold',
-                    }}>
-                    {board.title}
-                </Typography>
-                <Typography variant='body1'>{board.desc}</Typography>
-            </Paper>
-            <TaskEditProvider>
-                <BoardModal open={open}
-                    onClose={handleClose}
-                    board={board}
-                />
-            </TaskEditProvider>
-        </>
-    )
-}
-
-function CreateBoard() {
-    return (
-        <Paper elevation={3}
-            sx={boardStyle}
-        >
-            <Typography variant='h6'
-                sx={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginBottom: 1,
-                    fontWeight: 'bold',
-                }}>
-                Create a Board
-            </Typography>
-            <AddCircleIcon sx={{ fontSize: 'h1.fontSize', flexGrow: 1 }} />
-        </Paper>
+        <Dashboard boards={demoBoards} />
     )
 }
 

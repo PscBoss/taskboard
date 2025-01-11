@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface TaskEditContextProps {
-    editingTaskId: string | null;
-    setEditingTaskId: (id: string | null) => void;
+    editingTaskId: number | null;
+    setEditingTaskId: (id: number | null) => void;
 }
 
 const TaskEditContext = createContext<TaskEditContextProps | undefined>(undefined);
@@ -12,7 +12,7 @@ interface TaskEditProviderProps {
 }
 
 export const TaskEditProvider: React.FC<TaskEditProviderProps> = ({ children }) => {
-    const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+    const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
 
     return (
         <TaskEditContext.Provider value={{ editingTaskId, setEditingTaskId }}>
