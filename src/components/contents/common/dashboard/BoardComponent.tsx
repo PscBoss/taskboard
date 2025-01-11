@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { TaskEditProvider } from "../task-cards/TaskEditContext";
-import BoardModal from "../BoardModal";
+import BoardModal from "./BoardModal";
 
 const boardStyle = {
     display: 'flex',

@@ -1,9 +1,9 @@
 import { Box, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import TaskColumn from "./TaskColumn";
+import TaskColumn from "../TaskColumn";
 import { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { Board, Column, Task } from "../../../types/interfaces";
+import { Board, Column, Task } from "../../../../types/interfaces";
 
 type BoardModalProps = {
     open: boolean
