@@ -1,20 +1,16 @@
-import { Paper, Typography } from "@mui/material";
+import { Paper, SxProps, Typography } from "@mui/material";
 import { useState } from "react";
 import { TaskEditProvider } from "../task-cards/TaskEditContext";
 import BoardModal from "./BoardModal";
+import { Board } from "../../../../types/interfaces";
 
-const boardStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '200px',
-    height: '200px',
-    justifyContent: 'flex-start',
-    padding: 2,
-    margin: 2
+interface BoardComponenetsProps {
+    board: Board
+    onDelete: (boardId: Board['id']) => void
+    sx: SxProps
 }
 
-function BoardComponents({ board }: any) {
+function BoardComponents({ board, onDelete, sx }: BoardComponenetsProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -22,7 +18,7 @@ function BoardComponents({ board }: any) {
     return (
         <>
             <Paper elevation={3}
-                sx={boardStyle}
+                sx={sx}
                 onClick={handleOpen}
             >
                 <Typography variant='h6'
@@ -34,12 +30,13 @@ function BoardComponents({ board }: any) {
                     }}>
                     {board.title}
                 </Typography>
-                <Typography variant='body1'>{board.desc}</Typography>
+                <Typography variant='body1' textAlign='center'>{board.desc}</Typography>
             </Paper>
             <TaskEditProvider>
                 <BoardModal open={open}
                     onClose={handleClose}
                     board={board}
+                    onDelete={onDelete}
                 />
             </TaskEditProvider>
         </>

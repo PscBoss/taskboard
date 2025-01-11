@@ -1,29 +1,24 @@
-import { Paper, Typography } from '@mui/material'
+import { Paper, SxProps, Typography } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CreateBoardModal from '../CreateBoardModal';
 import { useState } from 'react';
+import { Board } from '../../../../types/interfaces';
 
-function CreateBoard() {
+interface CreateBoardProps {
+    setBoards: React.Dispatch<React.SetStateAction<Board[]>>
+    sx: SxProps
+}
+
+function CreateBoard({ setBoards, sx }: CreateBoardProps) {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const boardStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '200px',
-        height: '200px',
-        justifyContent: 'flex-start',
-        padding: 2,
-        margin: 2
-    }
-
     return (
         <>
             <Paper elevation={3}
-                sx={boardStyle}
+                sx={sx}
                 onClick={handleOpen}
             >
                 <Typography variant='h6'
@@ -38,8 +33,10 @@ function CreateBoard() {
                 <AddCircleIcon sx={{ fontSize: 'h1.fontSize', flexGrow: 1 }} />
 
             </Paper>
-            <CreateBoardModal open={open}
+            <CreateBoardModal
+                open={open}
                 onClose={handleClose}
+                setBoards={setBoards}
             />
         </>
     )

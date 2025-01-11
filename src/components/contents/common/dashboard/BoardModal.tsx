@@ -1,15 +1,11 @@
-import { Box, Modal } from "@mui/material";
+import { Box, Button, Modal, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TaskColumn from "../TaskColumn";
 import { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Board, Column, Task } from "../../../../types/interfaces";
-
-type BoardModalProps = {
-    open: boolean
-    onClose: () => void
-    board: Board
-};
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import React from "react";
 
 const modalStyle = {
     position: 'absolute',
@@ -17,14 +13,81 @@ const modalStyle = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 1000,
-    height: 500,
+    height: 700,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
 
-function BoardModal({ board, open, onClose }: BoardModalProps) {
+interface BoardDeleteProps {
+    sx?: SxProps
+    boardId: Board['id']
+    boardTitle: Board['title']
+    onDelete: (boardId: Board['id']) => void
+}
+
+function BoardDelete({ sx, boardId, boardTitle, onDelete }: BoardDeleteProps) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    return (
+        <>
+            <BackspaceIcon sx={sx} onClick={handleOpen} />
+            <Modal open={open}
+                onClose={handleClose}
+                aria-labelledby={"confirm delete"}
+            >
+                <Box sx={{
+                    ...modalStyle,
+                    width: 600,
+                    height: 300,
+                    display: "flex",
+                    flexDirection: 'column',
+                }}>
+                    <Typography variant="h4" textAlign={'center'}>Do you want to delete board:</Typography>
+                    <Typography variant="h4" textAlign={'center'}>"{boardTitle}"</Typography>
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        width: 1,
+                        p: 5
+                    }}>
+                        <Button
+                            variant="contained"
+                            sx={{ width: '100px' }}
+                            color="warning"
+                            onClick={() => onDelete(boardId)}
+                        >
+                            Delete
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            sx={{ width: '100px' }}
+                            onClick={handleClose}
+                        >
+                            Cancel
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
+        </>
+    )
+}
+
+interface BoardModalProps {
+    open: boolean
+    onClose: () => void
+    board: Board
+    onDelete: (boardId: Board['id']) => void
+};
+
+function BoardModal({ board, open, onClose, onDelete }: BoardModalProps) {
     const [tasks, setTasks] = useState<Task[]>(board.tasks); // state for task management in the board
 
     function handleDragEnd(event: DragEndEvent) {
@@ -62,13 +125,13 @@ function BoardModal({ board, open, onClose }: BoardModalProps) {
         const updatedTasks = handleTaskUpdate(tasks, task.id, task)
         setTasks(() => updatedTasks)
     }
-
     return (
         <Modal open={open}
             onClose={onClose}
-            aria-labelledby="modal-title"
+            aria-labelledby={board.title}
+            aria-describedby={board.desc}
         >
-            <Box sx={modalStyle}>
+            <Box sx={{ ...modalStyle, overflowY: 'auto' }}>
                 <Typography variant='h6' id='modal-title'
                     sx={{
                         width: '100%',
@@ -89,9 +152,24 @@ function BoardModal({ board, open, onClose }: BoardModalProps) {
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
                             <TaskColumn key={column.id} column={column} tasksInColumn={tasks.filter(task => task.status === column.id)} onStopTaskEdit={handleStopTaskEdit} />
-                        ))};
+                        ))}
                     </DndContext>
                 </Box>
+                <BoardDelete
+                    sx={{
+                        position: 'absolute',
+                        top: 10,
+                        right: 10,
+                        color: 'pink',
+                        fontSize: '50px',
+                        '&:hover': {
+                            color: 'red'
+                        }
+                    }}
+                    boardTitle={board.title}
+                    boardId={board.id}
+                    onDelete={onDelete}
+                />
             </Box >
         </Modal >
     )

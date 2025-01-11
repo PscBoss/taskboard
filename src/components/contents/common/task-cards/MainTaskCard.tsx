@@ -53,7 +53,14 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
             {...(isEditing ? {} : { ref: setNodeRef })}
             {...(isEditing ? {} : listeners)}
             {...(isEditing ? {} : attributes)}
-            sx={{ ...style, margin: 1, backgroundColor: 'lightgrey', ...isOverStyle, height: '90px' }}
+            sx={{
+                ...style,
+                ...isOverStyle,
+                margin: 2,
+                backgroundColor: 'lightgrey',
+                width: '260px',
+                height: '120px'
+            }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
         >

@@ -39,9 +39,13 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
     return (
         <FormControl>
             <Box ref={elementRef}
-                display='flex'
-                flexDirection='column'>
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
                 <TextField id="title"
+                    size='small'
                     value={editingTask.title}
                     label="Task Title"
                     variant="outlined"
@@ -59,6 +63,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                         },
                     }} />
                 <TextField id="details"
+                    size='small'
                     value={editingTask.details}
                     label="Task Details"
                     variant="outlined"

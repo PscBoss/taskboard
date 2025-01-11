@@ -46,7 +46,7 @@ const theme = createTheme({
 
 const App: React.FC = () => {
 
-  const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>

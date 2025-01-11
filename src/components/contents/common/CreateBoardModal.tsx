@@ -1,10 +1,12 @@
 import { Modal, Box, FormControl, TextField, Button } from '@mui/material';
 import { Board } from '../../../types/interfaces';
 import { useState } from 'react';
+import React from 'react';
 
 interface CreateBoardModalProps {
     open: boolean
     onClose: () => void
+    setBoards: React.Dispatch<React.SetStateAction<Board[]>>
 };
 
 const modalStyle = {
@@ -24,19 +26,28 @@ const emptyBoard: Board = {
     id: Math.floor(Math.random() * 10000),
     title: "",
     desc: "",
-    columns: [],
+    columns: [{ id: 'to_do', title: 'To Do' },
+    { id: 'in_progress', title: 'In Progress', },
+    { id: 'done', title: 'Done' }],
     tasks: [],
 }
 
-function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
+function CreateBoardModal({ open, onClose, setBoards }: CreateBoardModalProps) {
     const [newBoard, setNewBoard] = useState(emptyBoard)
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setBoards((prevBoards) => ([...prevBoards, newBoard]))
+        onClose()
+    }
+
     return (
-        <FormControl>
+        <FormControl component={"form"}>
             <Modal open={open}
                 onClose={onClose}
                 aria-labelledby="modal-title"
             >
-                <Box sx={{ ...modalStyle, display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ ...modalStyle, display: 'flex', flexDirection: 'column' }} component='form' onSubmit={handleSubmit}>
                     <Box sx={{ margin: 1 }}>
                         <TextField
                             id="board-name"
@@ -91,7 +102,7 @@ function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
                             Cancel
                         </Button>
                     </Box>
-                </Box >
+                </Box>
             </Modal >
         </FormControl>
     )

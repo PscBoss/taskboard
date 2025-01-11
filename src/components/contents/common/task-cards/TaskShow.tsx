@@ -9,9 +9,9 @@ type TaskShowProps = {
 function TaskShow({ task }: TaskShowProps) {
     return (
         <>
-            <Box display='flex' flexDirection='row'>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <ReorderIcon />
-                <Typography variant='h6'>{task.title}</Typography>
+                <Typography variant='h6' marginLeft={1}>{task.title}</Typography>
             </Box>
             <Typography variant='body1'>{task.details}</Typography>
         </>
