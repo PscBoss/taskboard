@@ -60,10 +60,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 type LoggedInToggleProps = {
     isLoggedIn: boolean
-    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function LoggedInToggle({ isLoggedIn, setLoggedIn }: LoggedInToggleProps) {
+function LoggedInToggle({ isLoggedIn, setIsLoggedIn }: LoggedInToggleProps) {
     const [alignment, setAlignment] = useState<string | null>(isLoggedIn.toString());
 
     const handleAlignment = (
@@ -71,7 +71,7 @@ function LoggedInToggle({ isLoggedIn, setLoggedIn }: LoggedInToggleProps) {
         newAlignment: string | null
     ) => {
         setAlignment(newAlignment);
-        setLoggedIn((event.target as HTMLButtonElement).value === 'true');
+        setIsLoggedIn((event.target as HTMLButtonElement).value === 'true');
         console.log(event.target, "event.target");
         console.log(newAlignment, "newAlignment");
         console.log(isLoggedIn, "isLoggedIn");
@@ -97,10 +97,10 @@ function LoggedInToggle({ isLoggedIn, setLoggedIn }: LoggedInToggleProps) {
 
 type MainAppBarProps = {
     isLoggedIn: boolean;
-    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function MainAppBar({ isLoggedIn, setLoggedIn }: MainAppBarProps) {
+export default function MainAppBar({ isLoggedIn, setIsLoggedIn }: MainAppBarProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -223,7 +223,7 @@ export default function MainAppBar({ isLoggedIn, setLoggedIn }: MainAppBarProps)
                             />
                         </Search>
                     </Box>
-                    <LoggedInToggle setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn} />
+                    <LoggedInToggle setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         {/* <IconButton
                             size="large"

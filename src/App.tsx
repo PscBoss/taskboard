@@ -2,6 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useState } from 'react';
 import MainAppBar from './components/app-bar/MainAppBar';
 import HomeContents from './components/contents/home/HomeContents';
+import DemoDashboard from './components/contents/home/DemoDashboard';
 
 const theme = createTheme({
   palette: {
@@ -46,13 +47,15 @@ const theme = createTheme({
 
 const App: React.FC = () => {
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MainAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
-      <HomeContents />
+      <MainAppBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      {isLoggedIn
+        ? <DemoDashboard />
+        : <HomeContents />}
     </ThemeProvider>
   )
 };
