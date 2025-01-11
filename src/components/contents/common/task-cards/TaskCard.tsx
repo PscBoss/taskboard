@@ -27,6 +27,8 @@ function TaskCard({ task, sx }: TaskCardProps) {
     const { editingTaskId, setEditingTaskId } = useTaskEdit();
     const clickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    const isEditing = (editingTaskId === task.id)
+
     const handleTaskClick = () => {
         console.log('clicked on the task!');
         setEditingTaskId(task.id);
@@ -52,16 +54,16 @@ function TaskCard({ task, sx }: TaskCardProps) {
 
     return (
         <Card
-            ref={setNodeRef}
-            {...listeners}
-            {...attributes}
+            ref={isEditing ? null : setNodeRef}
+            {...(isEditing ? {} : listeners)}
+            {...(isEditing ? {} : attributes)}
             sx={{ ...style, margin: 1, backgroundColor: 'lightgrey', ...sx }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             id={task.id}
         >
             <CardContent>
-                {(editingTaskId === task.id)
+                {(isEditing)
                     ? <TaskEdit task={task} onStopTaskEdit={handleStopTaskEdit} />
                     : <TaskShow task={task} />}
             </CardContent>
