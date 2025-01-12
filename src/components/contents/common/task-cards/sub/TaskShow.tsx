@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import ReorderIcon from '@mui/icons-material/Reorder';
-import { Task } from '../../../../types/interfaces';
+import { Task } from '../../../../../types/interfaces';
 
 type TaskShowProps = {
     task: Task

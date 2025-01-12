@@ -6,8 +6,8 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Board, Column, Task } from "../../../../../types/interfaces";
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import React from "react";
-import BoardInfoShow from "./BoardInfoShow";
-import BoardInfoEdit from "./BoardInfoEdit";
+import BoardInfoShow from "./sub/BoardInfoShow";
+import BoardInfoEdit from "./sub/BoardInfoEdit";
 
 const modalStyle = {
     position: 'absolute',
@@ -20,6 +20,14 @@ const modalStyle = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+};
+
+const taskColumnStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginX: 1,
 };
 
 interface BoardDeleteProps {
@@ -92,9 +100,10 @@ interface BoardModalProps {
         title: Board['title'];
         desc: Board['desc'];
     }) => void
+    onStopTaskEdit: (tasks: Task[], boardId: Board['id']) => void
 };
 
-function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit }: BoardModalProps) {
+function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTaskEdit }: BoardModalProps) {
     const [tasks, setTasks] = useState(board.tasks) // state of task management in the board
     const [isEditingBoard, setIsEditingBoard] = useState(false)
 
@@ -105,6 +114,11 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit }: BoardMo
         }
     }, [open]
     )
+
+    // to send new tasks data to the board state when tasks data change.
+    useEffect(() => {
+        onStopTaskEdit(tasks, board.id)
+    }, [tasks])
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event; // active is the task being dragged, over is the task being dragged over
@@ -171,7 +185,9 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit }: BoardMo
                     <DndContext onDragEnd={handleDragEnd}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
-                            <TaskColumn key={column.id} column={column} tasksInColumn={tasks.filter(task => task.status === column.id)} onStopTaskEdit={handleStopTaskEdit} />
+                            <Box sx={taskColumnStyle}>
+                                <TaskColumn key={column.id} column={column} tasksInColumn={tasks.filter(task => task.status === column.id)} onStopTaskEdit={handleStopTaskEdit} />
+                            </Box>
                         ))}
                     </DndContext>
                 </Box>

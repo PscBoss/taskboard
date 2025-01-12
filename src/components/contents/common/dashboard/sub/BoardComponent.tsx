@@ -1,8 +1,8 @@
 import { Paper, SxProps, Typography } from "@mui/material";
 import { useState } from "react";
-import { TaskEditProvider } from "../task-cards/TaskEditContext";
-import BoardModal from "./board-modal/MainBoardModal";
-import { Board } from "../../../../types/interfaces";
+import { TaskEditProvider } from "../../task-cards/sub/TaskEditContext";
+import BoardModal from "../board-modal/BoardModal";
+import { Board, Task } from "../../../../../types/interfaces";
 
 interface BoardComponenetsProps {
     board: Board
@@ -13,9 +13,10 @@ interface BoardComponenetsProps {
         title: Board['title'];
         desc: Board['desc'];
     }) => void
+    onStopTaskEdit: (tasks: Task[], boardId: Board['id']) => void
 }
 
-function BoardComponents({ board, onDelete, sx, onStopBoardEdit }: BoardComponenetsProps) {
+function BoardComponents({ board, onDelete, sx, onStopBoardEdit, onStopTaskEdit }: BoardComponenetsProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => { setOpen(false) };
@@ -43,6 +44,7 @@ function BoardComponents({ board, onDelete, sx, onStopBoardEdit }: BoardComponen
                     board={board}
                     onDelete={onDelete}
                     onStopBoardEdit={onStopBoardEdit}
+                    onStopTaskEdit={onStopTaskEdit}
                 />
             </TaskEditProvider>
         </>

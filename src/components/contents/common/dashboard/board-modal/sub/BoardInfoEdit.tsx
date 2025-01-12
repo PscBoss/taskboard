@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Board } from '../../../../../types/interfaces'
+import { Board } from '../../../../../../types/interfaces'
 import { FormControl, Paper, TextField } from '@mui/material'
 
 interface BoardInfoEditProps {
@@ -58,13 +58,15 @@ function BoardInfoEdit({ boardId, boardTitle, boardDesc, isEditingBoard, setIsEd
                 elevation={3}
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    m: 2,
+                    p: 2,
                 }}
             >
                 <TextField id="Board Title"
                     size='medium'
                     sx={{
-                        m: 1
+                        m: 1,
                     }}
                     value={editingBoard.title}
                     label="Board Title"

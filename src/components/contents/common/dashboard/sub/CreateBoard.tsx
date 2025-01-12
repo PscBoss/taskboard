@@ -1,8 +1,8 @@
 import { Paper, SxProps, Typography } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CreateBoardModal from '../CreateBoardModal';
+import CreateBoardModal from '../../CreateBoardModal';
 import { useState } from 'react';
-import { Board } from '../../../../types/interfaces';
+import { Board } from '../../../../../types/interfaces';
 
 interface CreateBoardProps {
     setBoards: React.Dispatch<React.SetStateAction<Board[]>>

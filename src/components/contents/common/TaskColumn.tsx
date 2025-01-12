@@ -1,15 +1,8 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { useDroppable } from "@dnd-kit/core";
 import { Column, Task } from "../../../types/interfaces";
-import TaskCard from "./task-cards/MainTaskCard";
-
-const taskColumnStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginX: 1,
-};
+import TaskCard from "./task-cards/TaskCard";
+import AddTask from "./dashboard/board-modal/sub/AddTask";
 
 interface TaskColumnsProps {
     column: Column
@@ -23,10 +16,10 @@ function TaskColumn({ column, tasksInColumn, onStopTaskEdit }: TaskColumnsProps)
         id: column.id,
     });
 
-    const isOverStyle = isOver ? { backgroundColor: 'lightgreen' } : undefined;
+    const isOverStyle = isOver ? { backgroundColor: 'secondary.light' } : undefined;
 
     return (
-        <Box sx={taskColumnStyle}>
+        <>
             <Paper elevation={3}
                 sx={{
                     width: '280px',
@@ -51,7 +44,8 @@ function TaskColumn({ column, tasksInColumn, onStopTaskEdit }: TaskColumnsProps)
                     <TaskCard key={task.id} task={task} onStopTaskEdit={onStopTaskEdit} />
                 ))}
             </Paper>
-        </Box>
+            <AddTask />
+        </>
     )
 }
 

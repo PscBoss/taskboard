@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { Board } from '../../../../../types/interfaces'
+import { Board } from '../../../../../../types/interfaces'
 
 interface BoardInfoShowProps {
     boardTitle: Board['title']

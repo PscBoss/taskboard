@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import DashboardSegment from '../common/dashboard/MainDashboardSegment';
+import DashboardSegment from '../common/dashboard/DashboardSegment';
 
 //Data that will be fetched when the user logs in to the real dashboard
 const demoBoards = [

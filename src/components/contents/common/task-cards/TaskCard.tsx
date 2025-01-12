@@ -4,9 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import { Task } from '../../../../types/interfaces';
 import { useDraggable } from '@dnd-kit/core';
 import { useRef } from 'react';
-import TaskShow from './TaskShow';
-import TaskEdit from './TaskEdit';
-import { useTaskEdit } from './TaskEditContext';
+import TaskShow from './sub/TaskShow';
+import TaskEdit from './sub/TaskEdit';
+import { useTaskEdit } from './sub/TaskEditContext';
 
 type TaskCardProps = {
     task: Task
@@ -59,7 +59,10 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
                 margin: 2,
                 backgroundColor: 'lightgrey',
                 width: '260px',
-                height: '120px'
+                height: '120px',
+                '&:hover': {
+                    backgroundColor: 'primary.contrastText'
+                },
             }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
