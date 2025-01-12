@@ -1,16 +1,17 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { useDroppable } from "@dnd-kit/core";
-import { Column, Task } from "../../../types/interfaces";
-import TaskCard from "./dashboard/board-modal/task-cards/TaskCard";
-import AddTask from "./dashboard/board-modal/sub/AddTask";
+import { Column, Task } from "../../../../../types/interfaces";
+import TaskCard from "./task-cards/TaskCard";
+import AddTask from "./sub/AddTask";
 
 interface TaskColumnsProps {
     column: Column
     tasksInColumn: Task[]
     onStopTaskEdit: (task: Task) => void
+    onAddTask: (columnId: Column['id']) => void
 };
 
-function TaskColumn({ column, tasksInColumn, onStopTaskEdit }: TaskColumnsProps) {
+function TaskColumn({ column, tasksInColumn, onStopTaskEdit, onAddTask }: TaskColumnsProps) {
 
     const { isOver, setNodeRef } = useDroppable({
         id: column.id,
@@ -44,7 +45,9 @@ function TaskColumn({ column, tasksInColumn, onStopTaskEdit }: TaskColumnsProps)
                     <TaskCard key={task.id} task={task} onStopTaskEdit={onStopTaskEdit} />
                 ))}
             </Paper>
-            <AddTask />
+            <Box onClick={() => onAddTask(column.id)}>
+                <AddTask />
+            </Box>
         </>
     )
 }

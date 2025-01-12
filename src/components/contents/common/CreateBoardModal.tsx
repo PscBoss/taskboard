@@ -23,7 +23,7 @@ const modalStyle = {
 };
 
 const emptyBoard: Board = {
-    id: Math.floor(Math.random() * 10000),
+    id: Math.floor(Math.random() * 100000),
     title: "",
     desc: "",
     columns: [{ id: 'to_do', title: 'To Do' },

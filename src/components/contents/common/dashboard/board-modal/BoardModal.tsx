@@ -137,6 +137,16 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
             : task)); // to keep other tasks the same
     }
 
+    const handleAddTask = (columnId: Column['id']) => {
+        const emptyTask: Task = {
+            id: Math.floor(Math.random() * 100000),
+            title: "Task Name",
+            details: "Task Details",
+            status: columnId,
+        }
+        setTasks((prev) => [...prev, emptyTask])
+    }
+
     const handleTaskUpdate = (prevTasks: Task[], updatedTask: Task) => {
         // Use map method to return a new array
         return prevTasks.map(task => {
@@ -186,7 +196,12 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
                             <Box sx={taskColumnStyle}>
-                                <TaskColumn key={column.id} column={column} tasksInColumn={tasks.filter(task => task.status === column.id)} onStopTaskEdit={handleStopTaskEdit} />
+                                <TaskColumn key={column.id}
+                                    column={column}
+                                    tasksInColumn={tasks.filter(task => task.status === column.id)}
+                                    onStopTaskEdit={handleStopTaskEdit}
+                                    onAddTask={handleAddTask}
+                                />
                             </Box>
                         ))}
                     </DndContext>

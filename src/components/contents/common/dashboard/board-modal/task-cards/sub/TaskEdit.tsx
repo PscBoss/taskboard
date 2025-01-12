@@ -50,6 +50,9 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                     label="Task Title"
                     variant="outlined"
                     fullWidth
+                    sx={{
+                        marginBottom: 1
+                    }}
                     onChange={(e) => {
                         setEditingTask((prevTask) => ({ ...prevTask, title: e.target.value }))
                     }}
