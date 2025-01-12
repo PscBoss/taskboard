@@ -1,6 +1,6 @@
 import { Box, Button, Modal, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import TaskColumn from "../../TaskColumn";
+import TaskColumn from "./TaskColumn";
 import { useEffect, useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Board, Column, Task } from "../../../../../types/interfaces";
