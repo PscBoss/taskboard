@@ -1,21 +1,22 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { Board, Task } from '../../../../types/interfaces'
 import BoardComponents from './sub/BoardComponent'
 import CreateBoard from './sub/CreateBoard'
 import { useState } from 'react'
 
 interface DashboardSegmentProps {
+    segmentName: string
     boardsData: Board[]
 }
 
-function DashboardSegment({ boardsData }: DashboardSegmentProps) {
+function DashboardSegment({ segmentName, boardsData }: DashboardSegmentProps) {
 
     const sectionStyle = {
-        width: '100vw',
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        paddingX: 10
     }
 
     const boardStyle = {
@@ -76,6 +77,15 @@ function DashboardSegment({ boardsData }: DashboardSegmentProps) {
 
     return (
         <>
+            <Typography variant='h4'
+                sx={{
+                    width: '100%',
+                    paddingTop: 4,
+                    paddingLeft: 4,
+                    textAlign: 'start',
+                }}>
+                {segmentName}
+            </Typography>
             <Box sx={sectionStyle}>
                 {boards.map((board) => (
                     <BoardComponents key={board.id}

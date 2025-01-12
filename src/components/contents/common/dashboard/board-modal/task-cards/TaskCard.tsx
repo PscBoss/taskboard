@@ -63,6 +63,7 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
                 '&:hover': {
                     backgroundColor: 'primary.contrastText'
                 },
+                overflowY: 'auto'
             }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}

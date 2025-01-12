@@ -145,7 +145,7 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
         )
     }
 
-    const { editingTaskId, setEditingTaskId } = useTaskEdit();
+    const { setEditingTaskId } = useTaskEdit();
 
     const handleAddTask = (columnId: Column['id']) => {
         const newTask: Task = {
@@ -202,7 +202,7 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'row',
-                        alignItems: 'center',
+                        alignItems: 'flex-start',
                         justifyContent: 'space-between',
                     }}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}

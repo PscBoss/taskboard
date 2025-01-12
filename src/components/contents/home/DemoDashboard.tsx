@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import DashboardSegment from '../common/dashboard/DashboardSegment';
 
 //Data that will be fetched when the user logs in to the real dashboard
@@ -47,19 +47,10 @@ function DemoDashboard() {
     return (
         <Box sx={{
             background: "linear-gradient(to right,rgb(228, 204, 232),rgb(255, 229, 229), #ffebee)",
-            flexGrow: 1,
+            width: 1,
+            p: 'auto',
         }}>
-
-            <Typography variant='h4'
-                sx={{
-                    width: '100%',
-                    paddingTop: 4,
-                    paddingLeft: 4,
-                    textAlign: 'start',
-                }}>
-                My Boards (Guests's Demo)
-            </Typography>
-            <DashboardSegment boardsData={demoBoards} />
+            <DashboardSegment boardsData={demoBoards} segmentName="My Boards (Guests's Demo)" />
         </Box>
     )
 }
