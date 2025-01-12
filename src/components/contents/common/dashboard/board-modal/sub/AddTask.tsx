@@ -20,7 +20,7 @@ function AddTask() {
                 }
             }}>
                 <SwitchAccessShortcutAddIcon />
-                <Typography fontWeight={'bold'} marginX={1}> Add Task</Typography>
+                <Typography fontWeight={'bold'} marginX={1}>Add Task</Typography>
             </Box>
         </Paper>
     )

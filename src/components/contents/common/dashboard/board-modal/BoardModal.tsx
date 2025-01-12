@@ -8,6 +8,7 @@ import BackspaceIcon from '@mui/icons-material/Backspace';
 import React from "react";
 import BoardInfoShow from "./sub/BoardInfoShow";
 import BoardInfoEdit from "./sub/BoardInfoEdit";
+import TaskDelete from "./task-cards/TaskDelete";
 
 const modalStyle = {
     position: 'absolute',
@@ -121,20 +122,26 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
     }, [tasks])
 
     function handleDragEnd(event: DragEndEvent) {
-        const { active, over } = event; // active is the task being dragged, over is the task being dragged over
+        const { active, over } = event; // active is the task being dragged, over is the droppable area being dragged over
 
-        if (!over) return;  // if there is no task being dragged over, return
+        if (!over) return;  // if there is no droppable area being dragged over, return
 
-        const taskID = active.id as Task['id']; // active.id = column.id of the task being dragged
-        const newStatus = over.id as Column['id']; // over.id = column.id of the task being dragged over, to be updated as new task.status
+        const draggingTaskId = active.id as Task['id']; // active.id = column.id of the task being dragged
+        const droppingAreaId = over.id as Column['id'] | string; // over.id = column.id of the task being dragged over, to be updated as new task.status
 
         // setTask is used to update tasks status by using array.map to create new updated task array. 
-        setTasks(tasks.map(task => task.id === taskID
-            ? {
-                ...task,
-                status: newStatus,
-            } // to update the dragged task status on drag end
-            : task)); // to keep other tasks the same
+        setTasks((prev) => {
+            if (droppingAreaId === 'deleteTask') {
+                return prev.filter(task => (task.id !== draggingTaskId))
+            }
+            else return prev.map(task => (task.id === draggingTaskId // to only update the task to be dropped
+                ? {
+                    ...task,
+                    status: droppingAreaId,
+                }
+                : task)); // to keep other tasks the same
+        }
+        )
     }
 
     const handleAddTask = (columnId: Column['id']) => {
@@ -186,13 +193,14 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                             boardTitle={board.title}
                             boardDesc={board.desc} />
                 }
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                }}>
-                    <DndContext onDragEnd={handleDragEnd}>
+
+                <DndContext onDragEnd={handleDragEnd}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
                             <Box sx={taskColumnStyle}>
@@ -204,8 +212,9 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                                 />
                             </Box>
                         ))}
-                    </DndContext>
-                </Box>
+                    </Box>
+                    <TaskDelete />
+                </DndContext>
                 <BoardDelete
                     sx={{
                         position: 'absolute',
