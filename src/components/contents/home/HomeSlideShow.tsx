@@ -6,7 +6,6 @@ import Cover3 from '../../../assets/cover3.png'
 import Cover4 from '../../../assets/cover4.png'
 
 export default function HomeSlideShow() {
-    console.log(Cover1);
     const items = [
         {
             name: "TaskBoard",

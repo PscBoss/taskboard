@@ -9,6 +9,7 @@ import React from "react";
 import BoardInfoShow from "./sub/BoardInfoShow";
 import BoardInfoEdit from "./sub/BoardInfoEdit";
 import TaskDelete from "./task-cards/TaskDelete";
+import { useTaskEdit } from "./task-cards/sub/TaskEditContext";
 
 const modalStyle = {
     position: 'absolute',
@@ -144,14 +145,17 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
         )
     }
 
+    const { editingTaskId, setEditingTaskId } = useTaskEdit();
+
     const handleAddTask = (columnId: Column['id']) => {
-        const emptyTask: Task = {
+        const newTask: Task = {
             id: Math.floor(Math.random() * 100000),
             title: "Task Name",
             details: "Task Details",
             status: columnId,
         }
-        setTasks((prev) => [...prev, emptyTask])
+        setTasks((prev) => [...prev, newTask])
+        setEditingTaskId(newTask.id)
     }
 
     const handleTaskUpdate = (prevTasks: Task[], updatedTask: Task) => {

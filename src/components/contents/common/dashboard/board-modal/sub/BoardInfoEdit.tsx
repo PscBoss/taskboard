@@ -20,23 +20,10 @@ function BoardInfoEdit({ boardId, boardTitle, boardDesc, isEditingBoard, setIsEd
     const [editingBoard, setEditingBoard] = useState({ id: boardId, title: boardTitle, desc: boardDesc })
     // Ref to the element for detecting clicks outside the element
     const elementRef = useRef<HTMLDivElement>(null);
-    const ignoreClickOutside = useRef(false);
-
-    useEffect(() => {
-        if (isEditingBoard) {
-            ignoreClickOutside.current = true;
-            setTimeout(() => {
-                ignoreClickOutside.current = false;
-            }, 100);
-        }
-    }, [isEditingBoard]);
 
     // Effect to detect clicks outside the element
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (ignoreClickOutside.current) {
-                return;
-            }
             if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
                 onStopBoardEdit(editingBoard);
                 setIsEditingBoard(false);
@@ -44,11 +31,11 @@ function BoardInfoEdit({ boardId, boardTitle, boardDesc, isEditingBoard, setIsEd
         };
 
         // Add event listener to the document
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
             // Cleanup the event listener
-            document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [editingBoard]);
     return (

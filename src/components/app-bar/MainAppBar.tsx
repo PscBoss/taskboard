@@ -72,9 +72,6 @@ function LoggedInToggle({ isLoggedIn, setIsLoggedIn }: LoggedInToggleProps) {
     ) => {
         setAlignment(newAlignment);
         setIsLoggedIn((event.target as HTMLButtonElement).value === 'true');
-        console.log(event.target, "event.target");
-        console.log(newAlignment, "newAlignment");
-        console.log(isLoggedIn, "isLoggedIn");
     };
 
     return (

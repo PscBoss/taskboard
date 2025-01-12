@@ -7,7 +7,6 @@ function TaskDelete() {
         id: "deleteTask",
     });
 
-
     return (
         <Paper elevation={3}
             ref={setNodeRef}
@@ -27,7 +26,7 @@ function TaskDelete() {
 
             }}>
                 <DeleteForeverIcon />
-                <Typography fontWeight={'bold'} marginX={1}>Drop to Delete Task</Typography>
+                <Typography fontWeight={'bold'} marginX={1}>Drop to delete task</Typography>
             </Box>
         </Paper>
     )

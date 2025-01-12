@@ -28,11 +28,11 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
         };
 
         // Add event listener to the document
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
             // Cleanup the event listener
-            document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [editingTask]);
 
