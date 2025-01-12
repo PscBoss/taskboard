@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 import { useDroppable } from "@dnd-kit/core";
 import { Column, Task } from "../../../types/interfaces";
-import TaskCard from "./task-cards/TaskCard";
+import TaskCard from "./dashboard/board-modal/task-cards/TaskCard";
 import AddTask from "./dashboard/board-modal/sub/AddTask";
 
 interface TaskColumnsProps {

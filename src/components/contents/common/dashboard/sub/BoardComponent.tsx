@@ -1,6 +1,6 @@
 import { Paper, SxProps, Typography } from "@mui/material";
 import { useState } from "react";
-import { TaskEditProvider } from "../../task-cards/sub/TaskEditContext";
+import { TaskEditProvider } from "../board-modal/task-cards/sub/TaskEditContext";
 import BoardModal from "../board-modal/BoardModal";
 import { Board, Task } from "../../../../../types/interfaces";
 

@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { Task } from '../../../../types/interfaces';
+import { Task } from '../../../../../../types/interfaces';
 import { useDraggable } from '@dnd-kit/core';
 import { useRef } from 'react';
 import TaskShow from './sub/TaskShow';
