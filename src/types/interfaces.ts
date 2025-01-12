@@ -14,6 +14,7 @@ export interface Board {
     id: number
     title: string
     desc: string
+    creator: string
     columns: Column[]
     tasks: Task[]
 }

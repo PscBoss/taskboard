@@ -26,6 +26,7 @@ const emptyBoard: Board = {
     id: Math.floor(Math.random() * 100000),
     title: "",
     desc: "",
+    creator: "Guest",
     columns: [{ id: 'to_do', title: 'To Do' },
     { id: 'in_progress', title: 'In Progress', },
     { id: 'done', title: 'Done' }],

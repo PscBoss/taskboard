@@ -7,6 +7,7 @@ const demoBoards = [
         id: 1,
         title: 'Get Hyped',
         desc: "You can click on these boards to open them, and manage tasks inside.",
+        creator: 'Guest',
         columns: [
             { id: 'to_do', title: 'To Do' },
             { id: 'in_progress', title: 'In Progress', },
@@ -25,6 +26,7 @@ const demoBoards = [
         id: 2,
         title: 'Sign Up With TaskBoard',
         desc: "Your task now is to sign up for an account on TaskBoard.",
+        creator: 'Guest',
         columns: [
             { id: 'to_do', title: 'To Do' },
             { id: 'in_progress', title: 'In Progress', },

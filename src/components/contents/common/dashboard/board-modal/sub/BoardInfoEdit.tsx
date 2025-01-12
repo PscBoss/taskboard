@@ -15,7 +15,7 @@ interface BoardInfoEditProps {
     }) => void
 }
 
-function BoardInfoEdit({ boardId, boardTitle, boardDesc, isEditingBoard, setIsEditingBoard, onStopBoardEdit }: BoardInfoEditProps) {
+function BoardInfoEdit({ boardId, boardTitle, boardDesc, setIsEditingBoard, onStopBoardEdit }: BoardInfoEditProps) {
     // State for recording the changes to the board info (track changes in the input fields)
     const [editingBoard, setEditingBoard] = useState({ id: boardId, title: boardTitle, desc: boardDesc })
     // Ref to the element for detecting clicks outside the element
