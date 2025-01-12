@@ -21,7 +21,8 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
     // Effect to detect clicks outside the element
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
+            if ((elementRef.current && !elementRef.current.contains(event.target as Node)
+                && (editingTask.title && editingTask.details))) {
                 onStopTaskEdit(editingTask);
                 setEditingTaskId(null);
             }

@@ -24,7 +24,8 @@ function BoardInfoEdit({ boardId, boardTitle, boardDesc, setIsEditingBoard, onSt
     // Effect to detect clicks outside the element
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (elementRef.current && !elementRef.current.contains(event.target as Node)) {
+            if ((elementRef.current && !elementRef.current.contains(event.target as Node))
+                && (editingBoard.title && editingBoard.desc)) {
                 onStopBoardEdit(editingBoard);
                 setIsEditingBoard(false);
             }
