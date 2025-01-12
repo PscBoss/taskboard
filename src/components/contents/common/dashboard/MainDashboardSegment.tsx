@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { Board, Task } from '../../../../types/interfaces'
+import { Board } from '../../../../types/interfaces'
 import BoardComponents from './BoardComponent'
 import CreateBoard from './CreateBoard'
 import { useState } from 'react'

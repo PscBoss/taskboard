@@ -1,7 +1,7 @@
 import { Box, Button, Modal, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import TaskColumn from "../../TaskColumn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Board, Column, Task } from "../../../../../types/interfaces";
 import BackspaceIcon from '@mui/icons-material/Backspace';
@@ -97,6 +97,14 @@ interface BoardModalProps {
 function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit }: BoardModalProps) {
     const [tasks, setTasks] = useState(board.tasks) // state of task management in the board
     const [isEditingBoard, setIsEditingBoard] = useState(false)
+
+    // to stop editing and not applying changes when clicked outside the modal.
+    useEffect(() => {
+        if (!open) {
+            setIsEditingBoard(false)
+        }
+    }, [open]
+    )
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event; // active is the task being dragged, over is the task being dragged over

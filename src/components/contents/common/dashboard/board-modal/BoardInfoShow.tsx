@@ -1,19 +1,17 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { Board } from '../../../../../types/interfaces'
-import { MouseEventHandler } from 'react'
 
 interface BoardInfoShowProps {
     boardTitle: Board['title']
     boardDesc: Board['desc']
-    onClick: MouseEventHandler<HTMLSpanElement> | undefined
+    onClick: React.MouseEventHandler<HTMLDivElement>
 }
 
 function BoardInfoShow({ boardTitle, boardDesc, onClick }: BoardInfoShowProps) {
     return (
-        <>
+        <Box onClick={onClick}>
             <Typography variant='h6'
                 id='board-title'
-                onClick={onClick}
                 sx={{
                     width: '100%',
                     textAlign: 'center',
@@ -24,14 +22,13 @@ function BoardInfoShow({ boardTitle, boardDesc, onClick }: BoardInfoShowProps) {
             </Typography>
             <Typography variant='body1'
                 id='board-body'
-                onClick={onClick}
                 sx={{
                     marginY: 1,
                     textAlign: 'center'
                 }}>
                 {boardDesc}
             </Typography >
-        </>
+        </Box>
     )
 }
 
