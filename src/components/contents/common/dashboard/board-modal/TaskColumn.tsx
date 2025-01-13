@@ -17,7 +17,7 @@ function TaskColumn({ column, tasksInColumn, onStopTaskEdit, onAddTask }: TaskCo
         id: column.id,
     });
 
-    const isOverStyle = isOver ? { backgroundColor: 'secondary.light' } : undefined;
+    const isOverStyle = isOver ? { backgroundColor: 'secondary.light', border: '1px solid' } : undefined;
 
     return (
         <>

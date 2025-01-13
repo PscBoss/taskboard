@@ -14,6 +14,8 @@ import LogoIcon from './LogoIcon';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useState } from 'react';
+import Register from './Register';
+import Login from './Login';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -124,8 +126,8 @@ export default function MainAppBar({ isLoggedIn, setIsLoggedIn }: MainAppBarProp
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Log In</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Register</MenuItem>
+            <Login />
+            <Register />
         </Menu>
     );
 

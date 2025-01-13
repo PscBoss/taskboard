@@ -7,6 +7,8 @@ function TaskDelete() {
         id: "deleteTask",
     });
 
+    const isOverStyle = isOver ? { backgroundColor: 'orange', border: '1px solid red' } : undefined;
+
     return (
         <Paper elevation={3}
             ref={setNodeRef}
@@ -16,6 +18,7 @@ function TaskDelete() {
                 marginY: 2,
                 marginX: "auto",
                 backgroundColor: isOver ? 'orange' : undefined
+                , ...isOverStyle
             }}
         >
             <Box sx={{
