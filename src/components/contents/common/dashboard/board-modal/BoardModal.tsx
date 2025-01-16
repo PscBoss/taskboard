@@ -211,8 +211,8 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                     }}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
-                            <Box sx={taskColumnStyle}>
-                                <TaskColumn key={column.id}
+                            <Box key={column.id} sx={taskColumnStyle} >
+                                <TaskColumn
                                     column={column}
                                     tasksInColumn={tasks.filter(task => task.status === column.id)}
                                     onStopTaskEdit={handleStopTaskEdit}

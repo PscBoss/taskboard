@@ -1,5 +1,4 @@
-import { Backdrop, Box, Button, Modal, Typography } from '@mui/material'
-import ReorderIcon from '@mui/icons-material/Reorder';
+import { Box, Button, Modal, Typography } from '@mui/material'
 import { Task } from '../../../../../../../types/interfaces';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import { useRef } from 'react';
@@ -46,15 +45,6 @@ function TaskDelete({ taskId, taskTitle, onDeleteTask }: TaskDeleteProps) {
             clearTimeout(clickTimeoutRef.current);
             clickTimeoutRef.current = null;
             handleOpen();
-        }
-    };
-
-    const handleMouseDownModal = (event: React.MouseEvent<HTMLElement>) => {
-        // Ensure the event is triggered by the Backdrop
-        const isBackdrop = (event.target as HTMLElement).getAttribute('data-backdrop') === 'true';
-        if (isBackdrop) {
-            console.log('MouseDown detected on Backdrop:', event);
-            handleClose();
         }
     };
 
@@ -116,18 +106,18 @@ interface TaskShowProps {
     onDeleteTask: (TaskId: number) => void;
     onMouseDown?: () => void;
     onMouseUp?: () => void;
+    onClick?: () => void;
 }
 
 function TaskShow({ task, onDeleteTask }: TaskShowProps) {
     return (
-        <>
+        <Box sx={{ width: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <ReorderIcon />
                 <Typography variant='h6' marginLeft={1} flexGrow={1}>{task.title}</Typography>
                 <TaskDelete taskId={task.id} taskTitle={task.title} onDeleteTask={onDeleteTask} />
             </Box>
             <Typography variant='body1'>{task.details}</Typography>
-        </>
+        </Box>
     )
 }
 

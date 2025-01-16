@@ -1,6 +1,5 @@
-import { Box, InputAdornment, TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 import { Task } from '../../../../../../../types/interfaces'
-import ReorderIcon from '@mui/icons-material/Reorder';
 import FormControl from '@mui/material/FormControl';
 import { useEffect, useRef, useState } from 'react';
 import { useTaskEdit } from './TaskEditContext';
@@ -57,15 +56,7 @@ function TaskEdit({ task, onStopTaskEdit }: TaskEditProps) {
                     onChange={(e) => {
                         setEditingTask((prevTask) => ({ ...prevTask, title: e.target.value }))
                     }}
-                    slotProps={{
-                        input: {
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <ReorderIcon />
-                                </InputAdornment>
-                            ),
-                        },
-                    }} />
+                />
                 <TextField id="details"
                     size='small'
                     value={editingTask.details}
