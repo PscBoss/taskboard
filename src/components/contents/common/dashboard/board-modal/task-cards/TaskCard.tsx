@@ -12,9 +12,10 @@ type TaskCardProps = {
     task: Task
     isOverStyle?: SxProps
     onStopTaskEdit: (task: Task) => void
+    onDeleteTask: (TaskId: number) => void;
 }
 
-function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
+function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
     });
@@ -65,13 +66,16 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit }: TaskCardProps) {
                 },
                 overflowY: 'auto'
             }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
         >
             <CardContent>
                 {(isEditing)
-                    ? <TaskEdit task={task} onStopTaskEdit={onStopTaskEdit} />
-                    : <TaskShow task={task} />}
+                    ? <TaskEdit task={task}
+                        onStopTaskEdit={onStopTaskEdit}
+                    />
+                    : <TaskShow task={task} onDeleteTask={onDeleteTask}
+                        onMouseDown={handleMouseDown}
+                        onMouseUp={handleMouseUp}
+                    />}
             </CardContent>
         </Card>
     )

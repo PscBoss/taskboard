@@ -9,9 +9,10 @@ interface TaskColumnsProps {
     tasksInColumn: Task[]
     onStopTaskEdit: (task: Task) => void
     onAddTask: (columnId: Column['id']) => void
+    onDeleteTask: (TaskId: number) => void;
 };
 
-function TaskColumn({ column, tasksInColumn, onStopTaskEdit, onAddTask }: TaskColumnsProps) {
+function TaskColumn({ column, tasksInColumn, onStopTaskEdit, onAddTask, onDeleteTask }: TaskColumnsProps) {
 
     const { isOver, setNodeRef } = useDroppable({
         id: column.id,
@@ -42,7 +43,7 @@ function TaskColumn({ column, tasksInColumn, onStopTaskEdit, onAddTask }: TaskCo
                 ref={setNodeRef}
             >
                 {tasksInColumn.map((task) => (
-                    <TaskCard key={task.id} task={task} onStopTaskEdit={onStopTaskEdit} />
+                    <TaskCard key={task.id} task={task} onStopTaskEdit={onStopTaskEdit} onDeleteTask={onDeleteTask} />
                 ))}
             </Paper>
             <Box onClick={() => onAddTask(column.id)}>

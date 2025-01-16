@@ -52,7 +52,7 @@ function BoardDelete({ sx, boardId, boardTitle, onDelete }: BoardDeleteProps) {
             <BackspaceIcon sx={sx} onClick={handleOpen} />
             <Modal open={open}
                 onClose={handleClose}
-                aria-labelledby={"confirm delete"}
+                aria-labelledby={"confirm delete board"}
             >
                 <Box sx={{
                     ...modalStyle,
@@ -176,6 +176,10 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
         setTasks(() => updatedTasks)
     } // to update the tasks in the board
 
+    const handleDeleteTask = (taskId: number) => {
+        setTasks((prev) => prev.filter(task => task.id !== taskId))
+    }
+
     return (
         <Modal open={open}
             onClose={onClose}
@@ -213,6 +217,7 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                                     tasksInColumn={tasks.filter(task => task.status === column.id)}
                                     onStopTaskEdit={handleStopTaskEdit}
                                     onAddTask={handleAddTask}
+                                    onDeleteTask={handleDeleteTask}
                                 />
                             </Box>
                         ))}
