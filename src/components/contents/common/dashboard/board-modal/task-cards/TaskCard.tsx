@@ -1,4 +1,4 @@
-import { Box, SxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Task } from '../../../../../../types/interfaces';
@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import TaskShow from './sub/TaskShow';
 import TaskEdit from './sub/TaskEdit';
 import { useTaskEdit } from './sub/TaskEditContext';
-import ReorderIcon from '@mui/icons-material/Reorder';
 
 type TaskCardProps = {
     task: Task
@@ -17,7 +16,7 @@ type TaskCardProps = {
 }
 
 function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardProps) {
-    const { attributes, listeners, setNodeRef, transform, setActivatorNodeRef } = useDraggable({
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
     });
     const [isEditing, setIsEditing] = useState(false)
@@ -39,7 +38,6 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardP
     }
 
     const handleMouseDown = () => {
-        console.log('MouseDown')
         clickTimeoutRef.current = setTimeout(() => {
             clickTimeoutRef.current = null;
         }, 200);
@@ -55,8 +53,9 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardP
 
     return (
         <Card
-            ref={setNodeRef}
+            ref={isEditing ? undefined : setNodeRef}
             {...attributes}
+            {...listeners}
             sx={{
                 ...style,
                 ...isOverStyle,
