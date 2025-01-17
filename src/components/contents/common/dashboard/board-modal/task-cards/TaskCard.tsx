@@ -2,11 +2,11 @@ import { SxProps } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Task } from '../../../../../../types/interfaces';
-import { useDraggable } from '@dnd-kit/core';
 import { useEffect, useRef, useState } from 'react';
 import TaskShow from './sub/TaskShow';
 import TaskEdit from './sub/TaskEdit';
 import { useTaskEdit } from './sub/TaskEditContext';
+import { useSortable } from '@dnd-kit/sortable';
 
 type TaskCardProps = {
     task: Task
@@ -17,7 +17,7 @@ type TaskCardProps = {
 
 function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardProps) {
     const [isEditing, setIsEditing] = useState(false)
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
         id: task.id,
         disabled: isEditing
     });
@@ -27,6 +27,7 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardP
     const style = transform
         ? {
             transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+            transition
         }
         : undefined;
 

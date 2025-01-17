@@ -10,6 +10,7 @@ import BoardInfoShow from "./sub/BoardInfoShow";
 import BoardInfoEdit from "./sub/BoardInfoEdit";
 import TaskDelete from "./task-cards/TaskDelete";
 import { useTaskEdit } from "./task-cards/sub/TaskEditContext";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
 const modalStyle = {
     position: 'absolute',
@@ -128,21 +129,29 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
         if (!over) return;  // if there is no droppable area being dragged over, return
 
         const draggingTaskId = active.id as Task['id']; // active.id = column.id of the task being dragged
-        const droppingAreaId = over.id as Column['id'] | string; // over.id = column.id of the task being dragged over, to be updated as new task.status
+        const droppingAreaId = over.id as Column['id'] | Task['id']; // over.id = column.id of the task being dragged over, to be updated as new task.status
 
         // setTask is used to update tasks status by using array.map to create new updated task array. 
-        setTasks((prev) => {
-            if (droppingAreaId === 'deleteTask') {
-                return prev.filter(task => (task.id !== draggingTaskId))
-            }
-            else return prev.map(task => (task.id === draggingTaskId // to only update the task to be dropped
-                ? {
-                    ...task,
-                    status: droppingAreaId,
-                }
-                : task)); // to keep other tasks the same
+        if (droppingAreaId === 'deleteTask') {
+            setTasks(prev => prev.filter(task => (task.id !== draggingTaskId)))
         }
-        )
+        else {
+            const isColumnId = board.columns.some(column => column.id === droppingAreaId);
+            if (isColumnId) // In case of droppable area is a column
+                setTasks((prev) => prev.map((task) => (task.id === draggingTaskId // to only update the task to be dropped
+                    ? {
+                        ...task,
+                        status: droppingAreaId as Column['id'],
+                    }
+                    : task)))
+            else if (draggingTaskId !== droppingAreaId) {
+                setTasks((prev) => {
+                    const oldIndex = prev.findIndex(task => task.id === draggingTaskId);
+                    const newIndex = prev.findIndex(task => task.id === droppingAreaId);
+                    return arrayMove(prev, oldIndex, newIndex);
+                })
+            } // In case of droppable area is another task (and not the area of the one being dragged)
+        };
     }
 
     const { setEditingTaskId } = useTaskEdit();
@@ -223,13 +232,17 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                         {board.columns.map((column) => (
 
                             <Box key={column.id} sx={taskColumnStyle} >
-                                <TaskColumn
-                                    column={column}
-                                    tasksInColumn={tasks.filter(task => task.status === column.id)}
-                                    onStopTaskEdit={handleStopTaskEdit}
-                                    onAddTask={handleAddTask}
-                                    onDeleteTask={handleDeleteTask}
-                                />
+                                <SortableContext
+                                    items={tasks.filter(task => task.status === column.id).map(task => task.id)}
+                                >
+                                    <TaskColumn
+                                        column={column}
+                                        tasksInColumn={tasks.filter(task => task.status === column.id)}
+                                        onStopTaskEdit={handleStopTaskEdit}
+                                        onAddTask={handleAddTask}
+                                        onDeleteTask={handleDeleteTask}
+                                    />
+                                </SortableContext>
                             </Box>
                         ))}
                     </Box>
