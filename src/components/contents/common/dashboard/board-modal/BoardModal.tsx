@@ -180,6 +180,16 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
         setTasks((prev) => prev.filter(task => task.id !== taskId))
     }
 
+    // const dndMouse = useSensor(MouseSensor, {
+    //     // Press delay of 201ms, with tolerance of 500px of movement
+    //     activationConstraint: {
+    //         delay: 201,
+    //         tolerance: 500,
+    //     },
+    // })
+
+    // const dndSensors = useSensors(dndMouse)
+
     return (
         <Modal open={open}
             onClose={onClose}
@@ -211,6 +221,7 @@ function BoardModal({ board, open, onClose, onDelete, onStopBoardEdit, onStopTas
                     }}>
                         {/* onDragEnd is one of the dnd kit library's props to handle the end of a drag event */}
                         {board.columns.map((column) => (
+
                             <Box key={column.id} sx={taskColumnStyle} >
                                 <TaskColumn
                                     column={column}

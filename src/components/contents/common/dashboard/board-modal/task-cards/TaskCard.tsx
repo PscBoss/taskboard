@@ -16,10 +16,11 @@ type TaskCardProps = {
 }
 
 function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardProps) {
+    const [isEditing, setIsEditing] = useState(false)
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
+        disabled: isEditing
     });
-    const [isEditing, setIsEditing] = useState(false)
 
     useEffect(() => { setIsEditing(editingTaskId === task.id), [editingTaskId] })
 
@@ -34,7 +35,6 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardP
 
     const handleTaskClick = () => {
         setEditingTaskId(task.id);
-        console.log('Task Clicked');
     }
 
     const handleMouseDown = () => {
@@ -53,7 +53,7 @@ function TaskCard({ task, isOverStyle, onStopTaskEdit, onDeleteTask }: TaskCardP
 
     return (
         <Card
-            ref={isEditing ? undefined : setNodeRef}
+            ref={setNodeRef}
             {...attributes}
             {...listeners}
             sx={{
